@@ -1,0 +1,155 @@
+
+int min=days[0];
+for(int i=1;i<30;i++){
+if(days[i]<min) min=days[i];
+}
+System.out.println(min);
+
+
+//обычное создание массива на 10 элементов
+int[] arr=new int[10];
+System.out.println("Array length is "+arr.length);
+System.out.println("first elem is [0]="+arr[0]);
+System.out.println("last elem is ["+(arr.length-1)+"]="+arr[arr.length-1]);
+
+//создание и инициализация массива, возможно только в одну строку
+char[] arr2={'A','B','F','V'};
+System.out.println("Array length is "+arr2.length);
+System.out.println("first elem is [0]="+arr2[0]);
+
+//создание массива строк
+String[] arr3= new String[5];
+System.out.println("Array length is "+arr3.length);
+System.out.println("first elem is [0]="+arr3[0]);
+System.out.println(arr3[15]);//ArrayIndexOutOfBoundsException Если взять элемент выходящий за пределы массива, то приложение будет
+                                                              //остановлено и выброшено исключение
+
+-------------------------------------------------------------------------------
+int[] arr={1,2,3};
+int[] arr2= arr;
+arr2[0]=99;
+System.out.println(arr[0]); //99
+
+
+//содержит ли числовой массив определенное число
+public static boolean contains(int[]arr, int x){
+for(int i=0;i<arr.length;i++){
+if(arr[i]==x) return true;
+}
+return false;
+}
+
+//найти последнее слово массива, начинающееся с буквы А
+public static String findLastAWord(String[]arr){
+for(int i=arr.length-1;i>=0;i--){
+if(arr[i].charAt(0)=='A') return arr[i];
+}
+return null;
+}
+-----------------------------------------------------
+//поделить все числа на 10
+public static void div10(int[]arr){
+for(int i=0;i<arr.length;i++){
+arr[i]/=10;
+}
+}
+//если слово начинается с большой буквы
+//то привести все слово в верхний регистр
+public static void upWords(String[]arr){
+for(int i=0;i<arr.length;i++){
+if(arr[i].charAt(0)>='A'&&arr[i].charAt(0)<='Z')
+arr[i]=arr[i].toUpperCase();
+}
+}
+-------------------------------------------------
+//Найти максимальное значение
+public static int max(int[]arr){
+int max=arr[0];
+for(int i=1;i<arr.length;i++){
+if(arr[i]>max)max=arr[i];
+
+}
+return max;
+}
+
+//объединить все слова, составив их через пробел
+public static String concat(String[]arr){
+String res="";
+for(int i=0;i<arr.length-1;i++){
+res+=arr[i]+" ";
+}
+res+=arr[arr.length-1];
+return res;
+}
+---------------------------------------------------
+//добавить элемент в конец
+public static int[] addLast(int[]arr, int x){
+int[]res=new int[arr.length+1];
+for(int i=0;i<arr.length;i++){
+res[i]=arr[i];
+}
+res[arr.length]=x;
+return res;
+}
+---------------------------------------------------
+//добавить в конец такие элементы второго массива, которых нет в первом
+public static int[] addUniq(int[]arr, int[]arr2){
+//заводим временный массив, по размеру, как оба вместе
+int[]tmp=new int[arr.length+arr2.length];
+//элементы первого массива копируем без изменений
+for(int i=0;i<arr.length;i++){
+tmp[i]=arr[i];
+}
+//элементы второго копируем, только если их нет в массиве arr
+//заметьте, что j двигается не каждую итерацию, а только, когда
+надо
+int j = arr.length;
+for(int i=0;i<arr2.length;i++){
+if(!contains(arr, arr2[i]))tmp[j++]=arr2[i];
+}
+//делаем новый массив правильного размера и копируем туда
+значения
+int[]res=new int[j];
+for(int i=0;i<j;i++){
+res[i]=tmp[i];
+}
+return res;
+}
+public static boolean contains(int[]arr, int x){
+for(int i=0;i<arr.length;i++){
+if(arr[i]==x) return true;
+}
+return false;
+}
+--------------------------------------------------------------
+//сложение элементов двумерного массива
+public static int sum2D(int[][]arr){
+int sum=0;
+for(int i=0;i<arr.length;i++){
+for(int j=0;j<arr[i].length;j++){
+sum+=arr[i][j];
+}
+}
+return sum;
+}
+--------------------------------------------------------
+Квадратный массив
+int[][]arr=new int[5][5];
+System.out.println(arr.length);//5
+System.out.println(arr[0].length);//5
+
+Рваный массив
+int[][]arr=new int[5][];
+arr[0]=new int[5];
+arr[1]=new int[5];
+arr[2]=new int[5];
+arr[3]=new int[5];
+arr[4]=new int[5];
+System.out.println(arr.length);//5
+System.out.println(arr[0].length);//5
+
+Рваный массив с инлайн-инициализацией
+int [][] arr = {{1, 2, 3}, {4, 5},{9},{7},{3,2}};
+int[][]arr={new int[5],new int[5],new int[5],new int[5],new int[5]};
+System.out.println(arr.length);//5
+System.out.println(arr[0].length);//5

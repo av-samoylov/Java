@@ -5,12 +5,12 @@ public class NumLen {
         System.out.println(numLen(12567));
     }
 
-    public static int numLen(int num) {
+    public static int numLen(long x) {
         int count = 0;
-        while (num > 0) {
-            num /= 10;
+        do {
             count++;
-        }
+            x /= 10;
+        } while (x > 0);
         return count;
     }
 }
