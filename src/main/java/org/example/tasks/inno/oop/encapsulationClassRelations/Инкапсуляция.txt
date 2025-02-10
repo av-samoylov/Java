@@ -1,0 +1,219 @@
+public class A {
+String str;
+private A(String str) {
+this.str = str;
+}
+public static A of(String str){
+if(str==null) str="";
+return new A(str);
+}
+
+public static A ofNullable(String str){
+return new A(str);
+}
+public String toString() {
+return "A{" + "str=" + str + '}';
+}
+Модификаторы доступа:
+• public — член класса доступен всем и всегда
+• private — член класса доступен только изнутри класса
+
+Сокрытие конструктора:
+он перестал быть основным способом порождения объектов и был спрятан,что бы не вводитьв заблуждение.
+----------------------------------------------------------------------------------------------------
+
+class A{
+    int x;
+    A(int x){
+        this.x=x;
+    }
+    public String toString(){
+        return x + " ";
+    }
+}
+// A a = new A(7);
+a.x=-88;
+System.out.println(a); //вывод: "-88"
+Состояние классане инкапсулировано.
+Вводим ограничение: поле х должно всегда
+иметь строго положительное значение.
+---------------------------------------------------------------------------------------------------
+
+class A{
+  private  int x;
+    A(int x){
+        this.x=x;
+    }
+    public String toString(){
+        return x + " ";
+    }
+}
+// A a = new A(7);
+a.x=-88; //ошибка компиляции
+System.out.println(a); //вывод: "-88"
+Полю поставлен модификатор private —доступ ограничен классом.
+Строка 22 — ошибка, попытка доступа извне класса
+
+----------------------------------------------------------------------------------------------
+class A{
+  private  int x;
+    A(int x){
+       if(x>0) this.x=x;
+    }
+    public String toString(){
+        return x + " ";
+    }
+}
+
+A a1 = new A(-7);
+System.out.println(a1); //вывод: " 0 "
+A a2 = new A(7);
+System.out.println(a2); //вывод: " 7 "
+Конструктор устанавливает значение, только если оно корректно.
+Других способов изменить поле нет.
+Строка 21: попытка установить некорректное значение. Результат 0.
+Строка 23: установка корректного значения. Результат 9.
+----------------------------------------------------------------------------------------------
+ВЫБРАСЫВАНИЕ ОШИБКИ
+
+class A{
+  private  int x;
+  A(int x){
+       if(x>0) throw new IllegalArgumentException("x must be > 0");
+        this.x=x;
+  }
+  public String toString(){
+      return x + " ";
+  }
+}
+-------------------------------------------------------------------------------------------
+ИММУТАБЕЛЬНЫЙ ОБЪЕКТ
+class A{
+  private  int x;
+  A(int x){
+       if(x>0) throw new IllegalArgumentException("x must be > 0");
+        this.x=x;
+  }
+ int getX(){
+     return x;
+ }
+  public String toString(){
+      return x + " ";
+  }
+}
+Геттер — метод получения значения поля.
+Сейчас объекты
+класса A — иммутабельны (immutable — неизменяемы), так как значение поля  установить можно, а изменить — нельзя.
+
+------------------------------------------------------------------------------------------------------------
+МУТАБЕЛЬНЫЙ ОБЪЕКТ
+class A{
+  private  int x;
+  A(int x){
+       if(x>0) throw new IllegalArgumentException("x must be > 0");
+        this.x=x;
+  }
+ int getX(){
+     return x;
+ }
+ void setX(int x){
+        if(x>0) throw new IllegalArgumentException("x must be > 0");
+             this.x=x;
+ }
+  public String toString(){
+      return x + " ";
+  }
+}
+
+A a = new A(7);
+a.setX(9);
+System.out.println(a); //вывод: " 9 "
+Сеттер — метод установки значения поля.
+Сейчас объекты
+класса A —мутабельны (mutable — изменяемы), так как значение поля можно поменять в любой момент.
+
+class A{
+  private  int x;
+  A(int x){
+     privateSetX(x);
+  }
+ int getX(){
+     return x;
+ }
+ private void privateSetX(int x){
+         if(x>0) throw new IllegalArgumentException("x must be > 0");
+              this.x=x;
+  }
+
+ void setX(int x){
+        privateSetX(x);
+ }
+  public String toString(){
+      return x + " ";
+  }
+}
+------------------------------------------------------------------------------------------------------
+class A{
+  private  B b;
+  B getB(){
+      return b;
+  }
+  void setB(B b){
+  if(b.x<0) throw new IllegalArgumentException();
+      this.b=b;
+  }
+
+  public String toString(){
+      return b.x + " ";
+  }
+}
+class B{
+    int x;
+    B(int x){
+        this.x=x;
+    }
+    public String toString(){
+        return x + " ";
+    }
+}
+Объекты класса B ничем не ограничены.
+Объекты класса А должны содержать
+ссылки только на такие В,где х положительный.
+Попытка инкапсуляции как на примитивах — ошибка.
+----------------------------------------------------------------------------------------------
+ЗАЩИТНОЕ КОПИРОВАНИЕ
+class A{
+  private  B b;
+  B getB(){
+      return new B(b.x);  //защитное копирование, создается новый объект b;
+  }
+  void setB(B b){
+  if(b.x<0) throw new IllegalArgumentException();
+      this.b=new B(b.x); //защитное копирование, создается новый объект b;
+  }
+
+  public String toString(){
+      return b.x + " ";
+  }
+}
+B b1 = new B(3);
+A a = new A(b1);
+B b2 = a.getB();
+b1.x=-7;
+b2.x=-9;
+System.out.println(a); //вывод: " 3 "
+
+
+
+
+1. Неизменяемые объекты.
+Например, объекты класса String неизменяемы,а значит в сеттерах безопасно присваивать их ссылки
+и непосредственно возвращать их в геттерах.
+
+2. Защитное копирование.
+Возвращать или сохранять ссылки не на объекты,  записанные в полях, а на их копии.
+
+3. Возвращать не сами объекты, а какое-либо их представление,
+например, строковый вид и т. д.
+
+

@@ -1,0 +1,51 @@
+public class Start {
+public static void main(String[] args) {
+A a1=A.of(null);
+A a2=A.ofNullable(null);
+A a3=A.of("text");
+System.out.println(a1);
+System.out.println(a2);
+System.out.println(a3);
+}
+}
+8
+class A{
+String str;
+A(String str) {
+this.str = str;
+}
+static A of(String str){
+if(str==null) str="";
+return new A(str);
+}
+static A ofNullable(String str){
+return new A(str);
+}
+public String toString() {
+return "A{" + "str=" + str + '}';
+}
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
+
+ПУЛ КОНСТАНТ
+
+public class Start {
+9
+public static void main(String[] args) {
+Integer i1=300;
+Integer i2=300;
+Integer i3=3;
+Integer i4=3;
+Integer i5=Integer.valueOf(3);
+System.out.println(i1==i2);//false
+System.out.println(i3==i4);//true
+System.out.println(i3==i5);//true
+}
+}
+

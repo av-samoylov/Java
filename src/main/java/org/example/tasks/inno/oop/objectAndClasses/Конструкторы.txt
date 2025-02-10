@@ -1,0 +1,62 @@
+class A {
+
+int x;
+
+A () {
+}
+
+A (int x) {
+    if (x > 0)   // или if(x > 0 && x < 100)
+     this.x = x;
+}
+A(String s) {
+this(Integer.parseInt(s)); //this.x = Integer.parseInt(x); без дублирования кода // this - ссылка на текущий объект класса A
+}
+
+A (int x, int y) {
+this(x); //this.x = x; без дублирования кода // this - ссылка на текущий объект класса A
+this.x = y;
+}
+
+A (int x, int y, int z) {
+this(x, y); //this.x = x; без дублирования кода // this - ссылка на текущий объект класса A
+this.x = z;
+}
+
+A (String x, int y) {
+this(x); //this.x = Integer.parseInt(x); без дублирования кода // this - ссылка на текущий объект класса A
+this.x = y;
+}
+
+A (String s, int y, int z) {
+this(s, y); //this.x = Integer.parseInt(x); без дублирования кода // this - ссылка на текущий объект класса A
+this.x = z;
+}
+A(String patronymic, String name, int age) {
+    if(patronymic == null) patronymic = "Владимирович "
+    else patronymic = patronymic + " "
+    if(name == null) name = "Иванов"
+    else name = name + " ";
+    this.x = age;
+}
+
+}
+---------------------------------------------------------------------------------------------------
+class V {
+String firstName = "Иван";
+String lastName = " ";
+String patronymic = " ";
+
+V(String firstName, String lastName, String patronymic) {
+    if(firstName != null) this.firstName = firstName;
+    if(lastName != null) this.lastName = lastName;
+    if(patronymic != null) this.patronymic = patronymic;
+}
+V(String firstName, String lastName) {
+    this(firstName, lastName, null);
+}
+V(String firstName) {
+    this(firstName, null, null);
+}
+}
+-----------------------------------------------------------------------------------------------------

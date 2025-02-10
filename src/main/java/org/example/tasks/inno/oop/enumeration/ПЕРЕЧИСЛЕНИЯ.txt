@@ -1,0 +1,153 @@
+
+
+class TrafficLight{
+private String color;
+public TrafficLight(String color) {
+2
+if(!(color.equals("green")||
+color.equals("red")||
+color.equals("yellow")))
+throw new IllegalArgumentException();
+this.color = color;
+}
+}
+---------------------------------------------------------------------
+public class Start {
+public static void main(String[] args) {
+TrafficLight tr= new TrafficLight(Color.GREEN);
+}
+}
+class TrafficLight{
+private Color color;
+3
+public TrafficLight(Color color) {
+this.color = color;
+}
+}
+class Color{
+private String txt;
+public static final Color RED=new Color("RED");
+public static final Color YELLOW=new Color("YELLOW");
+public static final Color GREEN=new Color("GREEN");
+private Color(String txt) {
+this.txt = txt;
+}
+public String toString() {
+return txt;
+}
+}
+-----------------------------------------------------------------
+enum Color{
+Red,YELLOW,GREEN
+}
+
+------------------------------------------------------
+
+public class Start {
+public static void main(String[] args){
+Color clr= Color.GREEN;
+Color clr2= Color.valueOf("GREEN");
+System.out.println(clr==clr2);
+System.out.println(clr.ordinal());
+System.out.println(clr.compareTo(Color.YELLOW));
+5
+Color [] cls=Color.values();
+}
+}
+-----------------------------------------------
+
+enum Color implements Able{
+Red (42){
+public void able(int a){
+x+=a;
+}
+},YELLOW(33){
+public void able(int a){
+x-=a;
+}
+},GREEN(7){
+public void able(int a){
+x*=a;
+7
+}
+};
+int x;
+private Color(int x) {
+this.x = x;
+}
+public abstract void able(int a);
+}
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

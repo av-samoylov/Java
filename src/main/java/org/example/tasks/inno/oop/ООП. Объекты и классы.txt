@@ -1,0 +1,373 @@
+
+ПРОЦЕДУРНЫЙ СТЭК
+
+public class StackTest {
+static int[] stack=new int[100];
+static int cur;
+public static void push(int x){
+stack[cur++]=x;
+}
+public static int pop(){
+return stack[--cur];
+8
+}
+public static void main(String[] args) {
+push(1);push(2);push(3);
+System.out.println(pop());
+System.out.println(pop());
+System.out.println(pop());
+}
+}
+
+-------------------------------------------------------
+ПРОБЛЕМА: ДВА СТЕКА
+
+public class StackTest {
+static int[] stack1=new int[100];
+static int cur1;
+public static void push1(int x){
+stack1[cur1++]=x;
+}
+public static int pop1(){
+return stack1[--cur1];
+}
+static int[] stack2=new int[100];
+9
+static int cur2;
+public static void push2(int x){
+stack2[cur2++]=x;
+}
+public static int pop2(){
+return stack2[--cur2];
+}
+public static void main(String[] args){
+push2(1);push1(2);push2(3);
+System.out.println(pop1());
+System.out.println(pop2());
+System.out.println(pop2());
+}
+}
+
+---------------------------------------------------
+РЕШЕНИЕ: ПАРАМЕТРЫ МЕТОДА
+
+public class StackTest {
+static int[] stack1=new int[100];
+static int cur1;
+static int[] stack2=new int[100];
+static int cur2;
+10
+public static void push(int[]arr,int indx,int x){
+arr[indx++]=x;
+}
+public static int pop(int[]arr,int indx){
+return arr[--indx];
+}
+public static void main(String[] args){
+push(stack1,cur1,1);push(stack1,cur1,2);push(stack1,cur1,3);
+System.out.println(pop(stack1,cur1));
+System.out.println(pop(stack1,cur1));
+System.out.println(pop(stack1,cur1));
+}
+}
+------------------------------------------------------
+СТРУКТУРА СТЭКА
+
+public class StackTest {
+static struct stack{
+int[] stack=new int[100];
+int cur;
+}
+public static void push(stack s,int x){
+s.stack[s.cur++]=x;
+}
+public static int pop(stack s){
+return s.stack[--s.cur];
+}
+public static void main(String[] args){
+stack s1= new stack();
+stack s2= new stack();
+push(s1,1);
+push(s2,2);
+push(s1,3);
+System.out.println(pop(s2));
+System.out.println(pop(s1));
+System.out.println(pop(s1));
+}
+}
+
+-----------------------------------------------------------
+ПЕРЕХОД К ОБЪЕКТАМ
+public class StackTest {
+static class Stack {
+int[] stack = new int[100];
+int cur;
+public void push(int x) {
+stack[cur++] = x;
+}
+public int pop() {
+return stack[--cur];
+}
+}
+public static void main(String[] args) {
+Stack s1 = new Stack();
+Stack s2 = new Stack();
+s1.push(1);
+s2.push(2);
+s1.push(3);
+System.out.println(s2.pop());
+System.out.println(s1.pop());
+System.out.println(s1.pop());
+}
+}
+--------------------------------------------------------------
+ОБЪЕКТ: ОПРЕДЕЛЕНИЕ
+public class StackTest {
+public static void main(String[] args) {
+Stack s1 = new Stack();
+s1.push(1);
+s1.push(2);
+System.out.println(s1.pop());
+System.out.println(s1.pop());
+}
+}
+public class Stack {
+int[] stack = new int[100];
+int cur;
+public void push(int x) {
+stack[cur++] = x;
+}
+public int pop() {
+return stack[--cur];
+}
+}
+-------------------------------------------------------------\
+ОБЪЯВЛЕНИЕ КЛАССА
+
+class Имя_класса{
+тип имя_поля;                 //любое количество полей
+Имя_класса(параметры){
+тело_конструктора;              // специальный метод — конструктор
+                                // вызывается после операции new
+}
+
+тип имя_метода(параметры){
+тело_метода
+}
+}
+class A{
+String str;
+A(String txt){
+str=txt;
+}
+void foo(){
+System.out.println("A "+txt);
+}
+}
+------------------------------------------------------------
+СОЗДАНИЕ ОБЪЕКТОВ
+public class Start {
+public static void main(String[] args) {
+A a1= new A("some text");
+A a2= new A("more text");
+A a3= a1;
+a3.str="do you get it?";
+A a4= null;
+a1.foo();   //A do you get it?
+a2.foo();    //A more text
+a3.foo();    //A do you get it?
+a4.foo();    //NullPointerException
+}
+}
+class A {
+String str;
+A(String txt) {
+str = txt;
+}
+void foo() {
+System.out.println("A " + str);
+}
+}
+-----------------------------------------------------------
+КВИЗ: TRUE ИЛИ FALSE
+public class Start {
+public static void main(String[] args) {
+A a1= new A("some text");
+A a2= new A("some text");
+System.out.println(a1==a2);
+}
+} // folse выводит, потому что сравниваются ссылки
+---------------------------------------------------------
+
+ПЕРЕГРУЗКА И THIS
+
+public class Start {
+public static void main(String[] args) {
+A a1 = new A("some text");
+A a2 = new A();
+a1.foo();
+a2.foo(3);
+}
+}
+class A {
+String str;
+A(String str) {
+this.str = str;
+}
+A() {
+str = "";
+18
+}
+void foo() {
+System.out.println("A " + str);
+}
+void foo(int x) {
+for (int i = 0; i < x; i++) {
+this.foo();
+}
+}
+}
+--------------------------------------------------------
+ПРИВЕДЕНИЕ К СТРОКЕ
+
+public class Start {
+public static void main(String[] args) {
+A a1 = new A("some text");
+System.out.println(a1);
+}
+}
+class A {
+19
+String str="";
+A(String str) {
+this.str = str;
+}
+A() {}
+void foo() {
+System.out.println("A " + str);
+}
+void foo(int x) {
+for (int i = 0; i < x; i++) {
+this.foo();
+}
+}
+public String toString() {
+return "A{" + "str=" + str + '}';
+}
+}
+
+--------------------------------------------------------
+ПРИМЕР: СОТРУДНИКИ
+
+public class Start {
+public static void main(String[] args) {
+Employee e = new Employee("Pete");
+System.out.println(e);
+}
+}
+class Employee {
+String name;
+public Employee(String name) {
+this.name = name;
+}
+public String toString() {
+return "Employee " + name;
+}
+}
+--------------------------------------------------------
+НЕВЕРНО: СОТРУДНИКИ
+
+public class Start {
+public static void main(String[] args) {
+Employee e = new Employee("Pete", "Accounting", "Alex");
+Employee e2 = new Employee("Tom", "Accounting", "Oleg");
+System.out.println(e);
+System.out.println(e2);
+}
+}
+class Employee {
+String name;
+String dep;
+String boss;
+public Employee(String name, String dep, String boss) {
+this.name = name;
+this.dep = dep;
+this.boss = boss;
+}
+public String toString() {
+return "Employee " + name+" working in "+dep+" boss is "+boss;
+}
+}
+
+--------------------------------------------------------------
+
+ВЕРНО: СОТРУДНИКИ И ОТДЕЛЫ
+public class Start {
+public static void main(String[] args) {
+Department d= new Department("Accounting");
+Employee e = new Employee("Alex",d);
+Employee e2 = new Employee("Tom",d);
+Employee e3 = new Employee("Pete",d);
+d.boss=e;
+System.out.println(e);
+System.out.println(e2);
+System.out.println(e3);
+}
+}
+class Department {
+String name;
+Employee boss;
+public Department(String name) {
+this.name = name;
+}
+@Override
+public String toString() {
+return "Department " + name + ", boss is " + boss.name ;
+}
+}
+class Employee {
+String name;
+Department dep;
+public Employee(String name) {
+this.name = name;
+}
+public Employee(String name, Department dep) {
+this.name = name;
+this.dep = dep;
+}
+public String toString() {
+if(this==dep.boss) return "Employee "+name+" is boss in "+dep.name;
+return "Employee " + name+" working in "+dep;
+}
+}
+--------------------------------------------------------------------
+СПИСКИ
+
+int [] arr = new int[10];
+//при создании необходимо указать размер
+//изменить размер в дальнейшем нельзя
+arr[0]=5;//для добавления в конец надо знать, где конец
+for(...){
+//для добавления в начало сдвигаем
+//все элементы на один вперед
+23
+}
+arr[0]=5; //теперь присваиваем
+arr[0]=99;//замена
+for(...){
+//для удаления элемента
+//сдвигаем все элементы назад
+}
+for(...){
+//для вывода на экран проходим по массиву
+//и выводим каждый элемент
+}
+List<Integer> lst= new ArrayList<>();
+//размер указывать не обязательно.
+//автоматическое увеличение размера по необходимости
+lst.add(5);//просто добавляем
+lst.add(0,5);//добавляем с индексом
+lst.set(0, 99);//замена
+lst.remove(0);//просто удаляем
+System.out.println(lst);//просто выводим
+----------------------------------------------------

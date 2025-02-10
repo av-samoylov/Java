@@ -1,0 +1,12 @@
+class A {
+
+final int x = 10;
+final int y;
+final int[] arr = new int[5];
+
+A (final int y) {
+final int tmp = 5;
+this.y = y;
+}
+
+}
