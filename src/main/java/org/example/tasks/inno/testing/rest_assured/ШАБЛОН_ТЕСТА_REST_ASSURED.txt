@@ -1,0 +1,123 @@
+given():RequestSpecification
+• baseURI(строка)
+• param(строка, объект)
+• head(Header)
+• body(строка)
+
+when():Response
+get() или put() или post()
+и т.д.
+
+then():ValidatableResponse
+• statusCode(число)
+• contentType(перечисление)
+• header(строка, строка)
+• body(строка, матчер)
+
+ПРИМЕР ОПИСАНИЯ ENDPOINT СЕРВИСА
+
+
+Request: “get /student
+Параметры:
+имя: строка
+Response:
+Вариант 1:
+200 OK
+{
+Id: integer
+name: string
+grades: integer[]
+}
+Вариант 2:
+404 Not Found
+
+
+Student st= given()
+    .baseURI("http://localhost:8080/student")
+    .param("name", "John Doe")
+.when()
+    .get().as(Student.class);
+
+
+Student st= given()
+    .baseURI("http://localhost:8080/student")
+    .param("name", "John Doe")
+.when()
+    .get()
+.then()
+    .statusCode(200)
+    .contentType(ContentType.JSON)
+    .body("name", Matchers.equalTo("John Doe"))
+    .body("marks", Matchers.notNullValue())
+    .extract().as(Student.class);
+
+<dependency>
+<groupId>io.rest-assured</groupId>
+<artifactId>rest-assured</artifactId>
+<version>5.1.1</version>
+<scope>test</scope>
+</dependency>
+<dependency>
+<groupId>org.hamcrest</groupId>
+<artifactId>hamcrest-all</artifactId>
+<version>1.3</version>
+<scope>test</scope>
+</dependency>
+
+JSON ЧЕРЕЗ JSONPATH
+
+String json = """
+{
+    "id": 1,
+    "name": "John Doe",
+    "grades": [1, 2, 3]
+}""";
+JsonPath jsonPath = new JsonPath(json);
+int id = jsonPath.getInt("id");
+List<Integer> grades = jsonPath.get("grades");
+System.out.println(id + " " + grades);
+}
+<dependency>
+<groupId>io.rest-assured</groupId>
+<artifactId>json-path</artifactId>
+<version>5.2.0</version>
+<scope>test</scope>
+</dependency>
+
+
+
+RestAssured.given()
+        .baseURI("http://localhost:8080")
+        .when()
+        .get("/student")
+        .then()
+        .statusCode(200)
+        .contentType(ContentType.JSON)
+        .body("name", Matchers.equalTo("John Doe"))
+        .body("marks", Matchers.notNullValue());
+
+
+@Test
+public void test() {
+     RestAssured.given()
+        .baseURI("http://localhost:8080/student/1")
+        .contentType(ContentType.JSON)
+    .when()
+        .get()
+        .then()
+        .statusCode(200)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
