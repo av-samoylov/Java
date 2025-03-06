@@ -1,7 +1,5 @@
 package org.example.testingUi.office;
 
-import office.Option;
-
 import java.util.Scanner;
 
 public class Office {
